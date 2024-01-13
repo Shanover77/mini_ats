@@ -84,5 +84,7 @@ A placeholder function to initialize the program.
 ## Note
 
 - Ensure that the 'resumes' and 'jds' folders contain the relevant files before running the script.
+- To use exclusive mode where you want to consider only one JD file, add an _ before the file only. The program will skip all 
+jds except for that file.
 
 Feel free to customize the program according to your specific needs.

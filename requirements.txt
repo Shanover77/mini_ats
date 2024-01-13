@@ -2,3 +2,6 @@ python-docx
 scikit-learn
 transformers
 torch>=1.10.0
+spacy
+nltk
+tabulate
