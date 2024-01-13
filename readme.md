@@ -1,4 +1,4 @@
-# Simple ATS in Python
+# Mini ATS in Python
 
 ## Purpose
 
