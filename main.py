@@ -6,7 +6,7 @@
 import docx 
 import os
 import glob
-import keywords
+import transformer_keyextract
 
 def read_text_from_file(file_path):
     """
@@ -81,7 +81,23 @@ def showIt(path, jd, sim):
         else:
             color = '\033[1;31m'  # Red for sim < 40
 
-        print(f'Resume {path.ljust(40)} | {jd.ljust(20)} = {color}{str(sim)}%\033[0m')
+        sim = round(sim)
+        print(f'\n[RESULT: {path.ljust(40)} | {jd.ljust(20)} = {color}{str(sim)}%\033[0m')
+
+def print_small_text(strings, file_path):
+    """
+    Print a list of strings in a smaller text size.
+
+    Parameters:
+    - strings (List[str]): The list of strings to be printed.
+    - file_path (str): The path of the file associated with the strings.
+    """
+    small_text_start = '\033[2;37m'  # ANSI escape code for smaller text size
+    small_text_end = '\033[0m'  # ANSI escape code to reset text formatting
+    print('[keys of]' + file_path, end=' ')
+    
+    for string in strings:
+        print(f"{small_text_start}{string}{small_text_end}", end=' ')
 
 def init():
     print('works')
@@ -90,12 +106,14 @@ if __name__ == "__main__":
     all_files = get_word_files('resumes')
     for path in all_files:
         text = read_word_document(path)
-        resume_keys = keywords.extract_keywords(text, 100)
+        resume_keys = transformer_keyextract.extract_skills(text)
+        print_small_text(resume_keys, path)
 
         jdFiles = get_text_files('jds')
         for jd in jdFiles:
             jdText = read_text_from_file(jd)
-            jd_keys = keywords.extract_keywords(jdText, 100)
+            jd_keys = transformer_keyextract.extract_skills(jdText)
+            print_small_text(jd_keys, jd)
 
             sim = calculate_similarity_percentage(resume_keys, jd_keys)
             showIt(path, jd, sim)            
